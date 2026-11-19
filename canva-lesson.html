@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Canva for Beginners – Grade 7</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#241a4d;--violet:#5b3fd1;--teal:#0fb5a5;--sun:#ffc933;--coral:#ff6b6b;--paper:#fbfaff;--line:#d9d3f5;--ok:#0e9f6e;--bad:#d64545}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.55 Nunito,system-ui,sans-serif}
+h1,h2,h3{font-family:'Baloo 2',Nunito,sans-serif;line-height:1.15;margin:0 0 .4em}
+header{background:var(--violet);color:#fff;padding:28px 20px 22px}
+header h1{font-size:clamp(2rem,6vw,3.2rem);font-weight:800;max-width:760px;margin:0 auto}
+header p{max-width:760px;margin:4px auto 0;opacity:.9}
+nav{display:flex;gap:6px;max-width:760px;margin:16px auto 0;flex-wrap:wrap}
+nav button{flex:1;min-width:96px;border:0;border-radius:999px;padding:8px 10px;font:700 .85rem Nunito,sans-serif;background:rgba(255,255,255,.18);color:#fff;cursor:pointer}
+nav button.on{background:var(--sun);color:var(--ink)}
+nav button.done::after{content:" ✓"}
+main{max-width:760px;margin:0 auto;padding:22px 18px 60px}
+section{display:none}section.on{display:block}
+.card{background:#fff;border:2px solid var(--line);border-radius:16px;padding:18px;margin:16px 0}
+.goal{background:var(--sun);color:var(--ink);border-radius:12px;padding:12px 16px;font-weight:700}
+button.btn{background:var(--violet);color:#fff;border:0;border-radius:12px;padding:11px 20px;font:700 1rem Nunito,sans-serif;cursor:pointer}
+button.btn.alt{background:#fff;color:var(--violet);border:2px solid var(--violet)}
+button:focus-visible{outline:3px solid var(--coral);outline-offset:2px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.pager{display:flex;justify-content:space-between;margin-top:26px}
+.feedback{min-height:1.5em;font-weight:700;margin-top:8px}
+.ok{color:var(--ok)}.no{color:var(--bad)}
+/* editor mock */
+.mock{display:grid;grid-template-columns:70px 1fr;grid-template-rows:34px 1fr 36px;gap:6px;background:#e9e6f7;border-radius:12px;padding:6px;height:300px}
+.mock>button{border:2px dashed #9a8fe0;background:#fff;border-radius:8px;font:700 .75rem Nunito,sans-serif;color:var(--ink);cursor:pointer;padding:2px}
+.mock>button.sel{background:var(--sun);border-style:solid;border-color:var(--ink)}
+.m-top{grid-column:1/3}.m-side{grid-row:2}.m-canvas{grid-row:2;grid-column:2}.m-pages{grid-column:1/3}
+.m-canvas{display:flex;align-items:center;justify-content:center}
+#tourInfo{background:#fff;border-left:6px solid var(--teal);padding:12px 14px;border-radius:8px;margin-top:12px}
+/* match */
+.pairs{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pairs button{border:2px solid var(--line);background:#fff;border-radius:12px;padding:10px;font:700 .95rem Nunito,sans-serif;cursor:pointer;text-align:left;color:var(--ink)}
+.pairs button.pick{border-color:var(--violet);background:#efeaff}
+.pairs button.matched{border-color:var(--ok);background:#e2f7ee;cursor:default}
+.pairs button.wrong{border-color:var(--bad);background:#fde8e8}
+/* poster lab */
+.lab{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:600px){.lab,.pairs{grid-template-columns:1fr}}
+#poster{aspect-ratio:3/4;border-radius:10px;padding:18px;display:flex;flex-direction:column;justify-content:center;gap:10px;transition:all .25s;overflow:hidden;border:2px solid var(--ink)}
+#poster .t{font-family:'Baloo 2',sans-serif;font-weight:800;line-height:1.05}
+#poster .s{font-size:.9rem}
+.opt{margin:0 0 12px}.opt b{display:block;margin-bottom:4px}
+.opt button{border:2px solid var(--line);background:#fff;border-radius:999px;padding:5px 14px;margin:2px 4px 2px 0;font:700 .9rem Nunito,sans-serif;cursor:pointer;color:var(--ink)}
+.opt button.on{background:var(--violet);border-color:var(--violet);color:#fff}
+.meter{height:14px;background:#eee;border-radius:99px;overflow:hidden}
+.meter i{display:block;height:100%;width:0;background:var(--teal);transition:width .3s}
+/* quiz */
+.q button{display:block;width:100%;text-align:left;border:2px solid var(--line);background:#fff;border-radius:12px;padding:10px 14px;margin:8px 0;font:700 1rem Nunito,sans-serif;cursor:pointer;color:var(--ink)}
+.q button.right{border-color:var(--ok);background:#e2f7ee}
+.q button.bad{border-color:var(--bad);background:#fde8e8}
+/* mission */
+.check{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--line)}
+.check input{width:22px;height:22px;margin-top:3px;accent-color:var(--violet)}
+input[type=text]{font:inherit;padding:10px 12px;border:2px solid var(--line);border-radius:10px;width:100%;max-width:320px}
+#cert{display:none;text-align:center;border:6px double var(--violet);border-radius:16px;padding:26px;background:#fff}
+#cert h2{font-size:2rem;color:var(--violet)}
+.gal{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.gal div{background:#efeaff;border-radius:12px;padding:10px 12px;font-size:.95rem}
+.mc .item{padding:10px 0;border-bottom:1px solid var(--line)}
+.mc .item p{margin:0 0 6px;font-weight:700}
+.mc .item button{margin:3px 6px 3px 0;border:2px solid var(--violet);background:#fff;color:var(--violet);border-radius:10px;padding:6px 12px;font:700 .9rem Nunito,sans-serif;cursor:pointer}
+.sw{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.sw button{border:3px solid var(--line);border-radius:12px;padding:16px 8px;font:800 1.3rem 'Baloo 2',sans-serif;cursor:pointer}
+@media(max-width:600px){.gal{grid-template-columns:1fr}}
+kbd{background:#efeaff;border-radius:6px;padding:1px 7px;font-weight:700}
+@media print{header,nav,.pager,.no-print,section:not(#s5){display:none!important}#s5{display:block}.card{display:none}#cert{display:block!important}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header>
+  <h1>Design Like a Pro: Canva for Beginners</h1>
+  <p>Grade 7 · Learn the tools, try the tricks, make your first design.</p>
+  <nav id="nav" aria-label="Lesson steps"></nav>
+</header>
+<main>
+
+<!-- 1 -->
+<section id="s0" class="on">
+  <h2>What is Canva?</h2>
+  <div class="goal">Goal: explain what Canva is and what you can make with it.</div>
+  <div class="card">
+    <p>Canva is a free, drag-and-drop design tool that works in your web browser. You do not need to draw. You pick a template, change the words and pictures, and make it yours.</p>
+    <p><b>Tap each card to see what you could make for school:</b></p>
+    <div class="row" id="uses"></div>
+    <p id="useInfo" class="feedback"></p>
+  </div>
+  <div class="card">
+    <h3>Before you start</h3>
+    <p>Go to <b>canva.com</b>, sign up with your school email (ask your teacher or parent first), then choose <b>Create a design</b>. Every design starts with a blank page or a template.</p>
+  </div>
+  <div class="card">
+    <h3>Examples from school life</h3>
+    <div class="gal">
+      <div><b>Poster</b><br>"Clean-Up Drive" with a big title, a date, and one photo.</div>
+      <div><b>Presentation</b><br>A 5-slide report on the water cycle, one idea per slide.</div>
+      <div><b>Infographic</b><br>"Parts of a Cell" with labels and arrows.</div>
+      <div><b>Certificate</b><br>An "Honor Student" award for your class.</div>
+      <div><b>Invitation</b><br>A card for the class Christmas party.</div>
+      <div><b>Schedule</b><br>A weekly study planner with colors for each subject.</div>
+    </div>
+  </div>
+  <div class="card">
+    <h3>Activity: choose the design type</h3>
+    <div class="mc" id="mc0"></div>
+  </div>
+</section>
+
+<!-- 2 --></section>
+
+<!-- 2 -->
+<section id="s1">
+  <h2>Meet the Editor</h2>
+  <div class="goal">Goal: name the 4 main parts of the Canva editor.</div>
+  <div class="card">
+    <p>This is a simplified map of the editor. <b>Tap a part</b> to learn what it does.</p>
+    <div class="mock" id="mock">
+      <button class="m-top" data-k="top">Top toolbar</button>
+      <button class="m-side" data-k="side">Side panel</button>
+      <button class="m-canvas" data-k="canvas">Canvas (your page)</button>
+      <button class="m-pages" data-k="pages">Pages</button>
+    </div>
+    <div id="tourInfo">Tap a part of the editor above.</div>
+  </div>
+  <div class="card">
+    <h3>Match the tool to its job</h3>
+    <p>Tap a tool on the left, then its job on the right.</p>
+    <div class="pairs" id="pairs"></div>
+    <p id="pairMsg" class="feedback"></p>
+  </div>
+  <div class="card">
+    <h3>Activity: where would you click?</h3>
+    <div class="mc" id="mc1"></div>
+  </div>
+</section>
+
+<!-- 3 --></section>
+
+<!-- 3 -->
+<section id="s2">
+  <h2>Make It Look Good</h2>
+  <div class="goal">Goal: use 3 design rules to make a poster easy to read.</div>
+  <div class="card">
+    <p>This poster is for a <b>School Recycling Week</b>. It looks messy now. Change the options to fix it. The meter shows how readable it is.</p>
+    <div class="lab">
+      <div id="poster"><div class="t">RECYCLING WEEK</div><div class="s">Bring your plastic bottles to the Science room every Friday.</div></div>
+      <div>
+        <div class="opt"><b>1. Text size</b><button data-g="size" data-v="small" class="on">Small</button><button data-g="size" data-v="big">Big title</button></div>
+        <div class="opt"><b>2. Colors</b><button data-g="color" data-v="low" class="on">Yellow on white</button><button data-g="color" data-v="high">Dark on light</button></div>
+        <div class="opt"><b>3. Fonts</b><button data-g="font" data-v="many" class="on">Mixed fonts</button><button data-g="font" data-v="two">Two fonts</button></div>
+        <div class="opt"><b>4. Alignment</b><button data-g="align" data-v="mess" class="on">Scattered</button><button data-g="align" data-v="left">Aligned left</button></div>
+        <div class="meter" aria-hidden="true"><i id="meter"></i></div>
+        <p id="labMsg" class="feedback">Readability: 0 of 4 fixes</p>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <b>Remember:</b> <b>Contrast</b> (text stands out), <b>Hierarchy</b> (big title, smaller details), <b>Consistency</b> (2 fonts, same colors), <b>Alignment</b> (things line up).
+  </div>
+  <div class="card">
+    <h3>Activity: which is easier to read?</h3>
+    <p>Tap the text that is easier to read.</p>
+    <div id="contrast"></div>
+    <p id="cMsg" class="feedback"></p>
+  </div>
+  <div class="card">
+    <h3>Activity: build the hierarchy</h3>
+    <p>Which order should a poster use, from biggest to smallest?</p>
+    <div class="mc" id="mc2"></div>
+  </div>
+</section>
+
+<!-- 4 --></section>
+
+<!-- 4 -->
+<section id="s3">
+  <h2>Shortcuts and Safe Sharing</h2>
+  <div class="goal">Goal: use 4 quick shortcuts and share your work responsibly.</div>
+  <div class="card">
+    <p>Select an element on your canvas, then try these (on Mac, use <kbd>Cmd</kbd> instead of <kbd>Ctrl</kbd>).</p>
+    <ul>
+      <li><kbd>Ctrl</kbd> + <kbd>C</kbd> and <kbd>Ctrl</kbd> + <kbd>V</kbd>: copy and paste</li>
+      <li><kbd>Ctrl</kbd> + <kbd>Z</kbd>: undo a mistake</li>
+      <li><kbd>Delete</kbd>: remove the element</li>
+      <li><kbd>Ctrl</kbd> + <kbd>D</kbd>: duplicate</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Is it OK? Decide.</h3>
+    <div id="ethics"></div>
+  </div>
+  <div class="card">
+    <h3>Activity: shortcut challenge</h3>
+    <div class="mc" id="mc3"></div>
+  </div>
+</section>
+
+<!-- 5 --></section>
+
+<!-- 5 -->
+<section id="s4">
+  <h2>Quick Quiz</h2>
+  <div class="goal">Goal: check what you learned. 6 questions.</div>
+  <div class="card q" id="quiz"></div>
+  <p id="quizScore" class="feedback"></p>
+</section>
+
+<!-- 6 -->
+<section id="s5">
+  <h2>Your Mission</h2>
+  <div class="goal">Goal: make your first design in Canva.</div>
+  <div class="card no-print">
+    <p>Make a <b>poster about a topic from class</b> (for example, the water cycle or a healthy habit). Tick each step when it is done.</p>
+    <div id="mission"></div>
+    <p class="feedback" id="mMsg"></p>
+  </div>
+  <div class="card no-print">
+    <h3>Pick a topic</h3>
+    <p>Tap one for ideas, or choose your own.</p>
+    <div class="row" id="topics"></div>
+    <p id="topicInfo" class="feedback"></p>
+  </div>
+  <div class="card no-print">
+    <h3>Final check: be your own critic</h3>
+    <p>Look at your poster and answer honestly.</p>
+    <div id="crit"></div>
+    <p class="feedback" id="critMsg"></p>
+  </div>
+  <div class="card no-print">
+    <label for="nm"><b>Your name</b></label><br>
+    <input type="text" id="nm" placeholder="Type your name">
+    <p><button class="btn" id="certBtn">Get my certificate</button></p>
+  </div>
+  <div id="cert"><h2>Canva Beginner Certificate</h2><p>This certifies that</p><h3 id="cname"></h3><p>completed Canva for Beginners, Grade 7.</p><p id="cscore"></p><p class="no-print"><button class="btn alt" onclick="window.print()">Print certificate</button></p></div>
+</section>
+
+<div class="pager no-print">
+  <button class="btn alt" id="back">Back</button>
+  <button class="btn" id="next">Next</button>
+</div>
+</main>
+
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const titles=["What is Canva?","The Editor","Design Rules","Shortcuts","Quiz","Mission"];
+let cur=0,done=new Set(),quizScore=0;
+
+/* navigation */
+const nav=$('#nav');
+titles.forEach((t,i)=>{const b=document.createElement('button');b.textContent=t;b.onclick=()=>go(i);nav.appendChild(b)});
+function go(i){done.add(cur);cur=Math.max(0,Math.min(5,i));
+  $$('section').forEach((s,j)=>s.classList.toggle('on',j===cur));
+  $$('#nav button').forEach((b,j)=>{b.classList.toggle('on',j===cur);b.classList.toggle('done',done.has(j)&&j!==cur)});
+  $('#back').style.visibility=cur?'visible':'hidden';
+  $('#next').style.visibility=cur<5?'visible':'hidden';
+  window.scrollTo({top:0})}
+$('#back').onclick=()=>go(cur-1);$('#next').onclick=()=>go(cur+1);
+
+/* 1 uses */
+const uses={"Poster":"Announce an event, like Recycling Week or a school fair.","Presentation":"Make slides for your report with pictures and short text.","Infographic":"Show facts in a picture, like the parts of a plant.","Social post":"Make a square image for a class or club page (with teacher permission).","Video":"Combine clips, music, and words for a short project video."};
+Object.keys(uses).forEach(k=>{const b=document.createElement('button');b.className='btn alt';b.textContent=k;b.onclick=()=>{$('#useInfo').textContent=uses[k]};$('#uses').appendChild(b)});
+
+/* 2 tour */
+const tour={top:"Top toolbar: change the font, size, color, and position of whatever you select. Share and Download are up here too.",side:"Side panel: find Templates, Elements (shapes, icons), Text, Uploads, and more.",canvas:"Canvas: the page where you build your design. Click and drag things to move them.",pages:"Pages: add, copy, and reorder pages. Slides and multi-page designs live here."};
+$$('#mock button').forEach(b=>b.onclick=()=>{$$('#mock button').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');$('#tourInfo').textContent=tour[b.dataset.k]});
+const pairData=[["Templates","Ready-made layouts to start from"],["Elements","Shapes, lines, icons, and stickers"],["Text","Add headings and body words"],["Uploads","Use your own photos"]];
+let pa=null,matched=0;
+const pairs=$('#pairs');
+const left=pairData.map(p=>p[0]),right=pairData.map(p=>p[1]).sort(()=>Math.random()-.5);
+left.forEach((l,i)=>{const b=document.createElement('button');b.textContent=l;b.dataset.s='L';b.dataset.v=l;pairs.appendChild(b);
+  const r=document.createElement('button');r.textContent=right[i];r.dataset.s='R';r.dataset.v=right[i];pairs.appendChild(r)});
+pairs.onclick=e=>{const b=e.target.closest('button');if(!b||b.classList.contains('matched'))return;
+  if(!pa||pa.dataset.s===b.dataset.s){if(pa)pa.classList.remove('pick');pa=b;b.classList.add('pick');return}
+  const L=pa.dataset.s==='L'?pa:b,R=pa.dataset.s==='L'?b:pa;
+  const ok=pairData.some(p=>p[0]===L.dataset.v&&p[1]===R.dataset.v);
+  pa.classList.remove('pick');
+  if(ok){L.classList.add('matched');R.classList.add('matched');matched++;
+    $('#pairMsg').className='feedback ok';$('#pairMsg').textContent=matched===4?"All matched. Great job!":"Correct!"}
+  else{[L,R].forEach(x=>x.classList.add('wrong'));setTimeout(()=>[L,R].forEach(x=>x.classList.remove('wrong')),600);
+    $('#pairMsg').className='feedback no';$('#pairMsg').textContent="Not a match. Try again."}
+  pa=null};
+
+/* 3 poster lab */
+const st={size:'small',color:'low',font:'many',align:'mess'};
+function lab(){const p=$('#poster'),t=p.querySelector('.t'),s=p.querySelector('.s');
+  t.style.fontSize=st.size==='big'?'3rem':'1rem';
+  p.style.background=st.color==='high'?'#fff7d6':'#fff';
+  t.style.color=st.color==='high'?'#241a4d':'#f3e27a';
+  s.style.color=st.color==='high'?'#241a4d':'#f3e27a';
+  t.style.fontFamily=st.font==='two'?"'Baloo 2',sans-serif":"'Brush Script MT',cursive";
+  s.style.fontFamily=st.font==='two'?"Nunito,sans-serif":"'Courier New',monospace";
+  p.style.alignItems=st.align==='left'?'flex-start':'center';
+  p.style.textAlign=st.align==='left'?'left':'right';
+  t.style.transform=st.align==='mess'?'rotate(-6deg)':'none';
+  s.style.transform=st.align==='mess'?'rotate(4deg)':'none';
+  const n=(st.size==='big')+(st.color==='high')+(st.font==='two')+(st.align==='left');
+  $('#meter').style.width=n*25+'%';
+  $('#labMsg').textContent=n===4?"Readability: 4 of 4. Now it is clear and easy to read!":"Readability: "+n+" of 4 fixes";
+  $('#labMsg').className='feedback '+(n===4?'ok':'')}
+$$('.opt button').forEach(b=>b.onclick=()=>{st[b.dataset.g]=b.dataset.v;
+  b.parentElement.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));lab()});
+lab();
+
+/* 4 ethics */
+const eth=[
+ ["You find a cool picture on Google and use it in your poster.","maybe","Careful. Many images are copyrighted. Use Canva's own library or pictures you made, and ask your teacher."],
+ ["You put a classmate's photo in your poster without asking.","no","Always ask first. People have the right to say no to their photo being shared."],
+ ["You use a Canva template and change the words and colors.","yes","Yes. Templates are made to be edited. Make it your own."],
+ ["You share your password so a friend can finish your design.","no","Never share your password. Use the Share button to invite them to the design instead."]];
+eth.forEach(([q,a,why])=>{const d=document.createElement('div');d.className='check';d.style.display='block';
+  d.innerHTML='<p style="margin:0 0 6px"><b>'+q+'</b></p><div class="row"></div><p class="feedback"></p>';
+  [["OK","yes"],["Not OK","no"],["Ask first","maybe"]].forEach(([l,v])=>{const b=document.createElement('button');b.className='btn alt';b.textContent=l;
+    b.onclick=()=>{const f=d.querySelector('.feedback');f.className='feedback '+(v===a?'ok':'no');f.textContent=(v===a?'Correct. ':'Not quite. ')+why};d.querySelector('.row').appendChild(b)});
+  $('#ethics').appendChild(d)});
+
+/* 5 quiz */
+const quiz=[
+ ["Which part of the editor is where you build your design?",["Side panel","Canvas","Pages bar"],1],
+ ["You want a ready-made layout. Where do you look?",["Templates","Uploads","Share"],0],
+ ["Your title is hard to read on a dark photo. What should you change?",["Add more fonts","Make it smaller","Use a lighter text color for contrast"],2],
+ ["Which is the best font choice for a poster?",["Five different fonts","Two fonts that go well together","A new font for each line"],1],
+ ["You made a mistake. Which shortcut fixes it?",["Ctrl + Z","Ctrl + V","Ctrl + D"],0],
+ ["Your friend asks for your Canva password to help. What do you do?",["Give it to them","Use Share to invite them","Post it in the group chat"],1]];
+let qi=0;
+function showQ(){const box=$('#quiz');
+  if(qi>=quiz.length){box.innerHTML='<h3>Score: '+quizScore+' / '+quiz.length+'</h3><p>'+(quizScore>=5?'Excellent work!':quizScore>=3?'Good job. Review the lessons and try again.':'Keep practicing. Go back to the lessons and try again.')+'</p><button class="btn alt" id="retry">Try again</button>';
+    $('#retry').onclick=()=>{qi=0;quizScore=0;showQ()};return}
+  const [q,o,a]=quiz[qi];box.innerHTML='<p><b>Question '+(qi+1)+' of '+quiz.length+'</b></p><h3>'+q+'</h3>';
+  o.forEach((t,i)=>{const b=document.createElement('button');b.textContent=t;
+    b.onclick=()=>{if(box.dataset.lock)return;box.dataset.lock=1;
+      if(i===a){b.classList.add('right');quizScore++}else{b.classList.add('bad');box.querySelectorAll('button')[a].classList.add('right')}
+      setTimeout(()=>{delete box.dataset.lock;qi++;showQ()},1100)};box.appendChild(b)})}
+showQ();
+
+/* 6 mission */
+const steps=["Open Canva and choose Create a design, then Poster.","Pick a template that fits your topic.","Change the title so it is big and easy to read.","Use only 2 fonts and keep your colors consistent.","Add one picture or element from the Elements tab.","Check that everything lines up (alignment).","Use Share to show your teacher. Never share your password."];
+steps.forEach((s,i)=>{const d=document.createElement('label');d.className='check';d.innerHTML='<input type="checkbox"><span>'+s+'</span>';
+  d.querySelector('input').onchange=()=>{const n=$$('#mission input:checked').length;$('#mMsg').textContent=n===steps.length?"Mission complete. Amazing work!":n+" of "+steps.length+" steps done";$('#mMsg').className='feedback '+(n===steps.length?'ok':'')};
+  $('#mission').appendChild(d)});
+$('#certBtn').onclick=()=>{const n=$('#nm').value.trim();if(!n){$('#nm').focus();return}
+  $('#cname').textContent=n;$('#cscore').textContent='Quiz score: '+quizScore+' / '+quiz.length;$('#cert').style.display='block';$('#cert').scrollIntoView({behavior:'smooth'})};
+/* generic multiple-choice activities */
+function mc(id,items){const box=$('#'+id);
+  items.forEach(([q,o,a,why])=>{const d=document.createElement('div');d.className='item';
+    d.innerHTML='<p>'+q+'</p><div></div><div class="feedback"></div>';
+    o.forEach((t,i)=>{const b=document.createElement('button');b.textContent=t;
+      b.onclick=()=>{const f=d.querySelector('.feedback');f.className='feedback '+(i===a?'ok':'no');
+        f.textContent=i===a?'Correct. '+why:'Not quite. Try another answer.'};
+      d.children[1].appendChild(b)});box.appendChild(d)})}
+mc('mc0',[
+ ["You need to announce the school fair on the bulletin board.",["Poster","Presentation","Video"],0,"A poster is made to be seen from far away."],
+ ["You must report on volcanoes in front of the class.",["Certificate","Presentation","Invitation"],1,"Slides help you show one idea at a time."],
+ ["You want to show the steps of photosynthesis with labels.",["Infographic","Schedule","Poster only with text"],0,"Infographics turn facts into pictures."],
+ ["You want to thank a classmate who helped you.",["Certificate or card","Spreadsheet","Poster"],0,"Certificates and cards are made for recognition."]]);
+mc('mc1',[
+ ["You want to change your title's color. Where do you click first?",["Select the text, then use the top toolbar","Pages bar","Uploads"],0,"The toolbar changes whatever is selected."],
+ ["You want to add a star shape.",["Elements in the side panel","Share button","Pages bar"],0,"Shapes, lines, and icons are in Elements."],
+ ["You want to put your own photo in the design.",["Templates","Uploads","Text"],1,"Uploads stores your own pictures."],
+ ["You need a second slide.",["Add page in the Pages bar","Delete key","Undo"],0,"Pages is where you add and reorder slides."]]);
+mc('mc2',[
+ ["Poster for a Science Fair:",["Date and place, then Title, then Details","Title, then Date and place, then Details","Details, then Title, then Date"],1,"The title is the biggest, the date and place next, and details are the smallest."]]);
+mc('mc3',[
+ ["You deleted the wrong picture. What do you press?",["Ctrl + Z","Ctrl + C","Ctrl + D"],0,"Ctrl + Z undoes your last action."],
+ ["You want a second copy of a star next to the first.",["Ctrl + D","Ctrl + Z","Delete"],0,"Ctrl + D duplicates the selected element."],
+ ["You want to copy a text box to another page.",["Ctrl + C, then Ctrl + V on the new page","Ctrl + Z","Delete"],0,"Copy, move to the page, then paste."],
+ ["You want to remove a shape you do not need.",["Delete","Ctrl + V","Ctrl + C"],0,"Select it, then press Delete."]]);
+
+/* contrast rounds */
+const cr=[["#fff","#f3e27a","#fff","#241a4d"],["#241a4d","#3a2d77","#241a4d","#ffc933"],["#fff","#ff6b6b","#fff","#0b6b63"]];
+let ci=0;
+function contrast(){const box=$('#contrast');box.innerHTML='';
+  if(ci>=cr.length){$('#cMsg').className='feedback ok';$('#cMsg').textContent='All 3 correct. High contrast means text stands out from the background.';return}
+  const [b1,t1,b2,t2]=cr[ci],wrap=document.createElement('div');wrap.className='sw';
+  [[b1,t1,false],[b2,t2,true]].sort(()=>Math.random()-.5).forEach(([bg,fg,good])=>{const b=document.createElement('button');
+    b.style.background=bg;b.style.color=fg;b.textContent='Read me';
+    b.onclick=()=>{if(good){ci++;$('#cMsg').className='feedback ok';$('#cMsg').textContent='Correct. Round '+ci+' of 3 done.';contrast()}
+      else{$('#cMsg').className='feedback no';$('#cMsg').textContent='Hard to read. Try the other one.'}};wrap.appendChild(b)});
+  box.appendChild(wrap)}
+contrast();
+
+/* topics + critique */
+const tp={"Water cycle":"Use blue colors, arrows for evaporation and rain, and labels for each stage.","Healthy habits":"Use icons: apple, water drop, bed. Keep each tip to one short line.","Our barangay":"Add a map picture, a title, and 3 facts about your community.","Save energy":"Use a light bulb icon, big numbers, and a call to action: Switch off!"};
+Object.keys(tp).forEach(k=>{const b=document.createElement('button');b.className='btn alt';b.textContent=k;b.onclick=()=>{$('#topicInfo').textContent=tp[k]};$('#topics').appendChild(b)});
+["Can I read the title from 2 meters away?","Is the text clearly different from the background?","Did I use only 2 fonts?","Do my pictures and text line up neatly?","Does my poster have one clear message?"].forEach(s=>{
+  const d=document.createElement('label');d.className='check';d.innerHTML='<input type="checkbox"><span>'+s+'</span>';
+  d.querySelector('input').onchange=()=>{const n=$$('#crit input:checked').length;$('#critMsg').textContent=n===5?'Great design! Ready to share with your teacher.':n+' of 5 yes. Fix what is missing.';$('#critMsg').className='feedback '+(n===5?'ok':'')};
+  $('#crit').appendChild(d)});
+go(0);
+</script>
+</body>
+</html>
